@@ -1,0 +1,35 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1>Add Show</h1>
+</div>
+
+<div class="card">
+  <form action="/organizer/events/<%= eventId %>/shows" method="POST" novalidate>
+    <div class="form-group">
+      <label for="venueId">Select Venue</label>
+      <select id="venueId" name="venueId" required>
+        <option value="">-- Choose Venue --</option>
+        <% venues.forEach(function(v) { %>
+          <option value="<%= v.id %>"><%= v.name %> (<%= v.location %>)</option>
+        <% }); %>
+      </select>
+      <p class="hint">Seats will be automatically generated based on the venue layout.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="startTime">Start Time</label>
+      <input type="datetime-local" id="startTime" name="startTime" required>
+    </div>
+
+    <div class="form-group">
+      <label for="basePrice">Base Price (LKR)</label>
+      <input type="number" id="basePrice" name="basePrice" step="0.01" min="0" required>
+    </div>
+
+    <div class="form-actions">
+      <a href="/organizer/events" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-primary">Add Show</button>
+    </div>
+  </form>
+</div>
+<%- include('../layouts/footer') %>

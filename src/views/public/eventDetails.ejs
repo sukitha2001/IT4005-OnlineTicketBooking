@@ -1,0 +1,29 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="event-detail">
+  <div class="event-header">
+    <span class="event-badge event-badge--<%= event.type.toLowerCase() %>"><%= event.type %></span>
+    <h1><%= event.title %></h1>
+    <% if (event.genre) { %><p class="event-genre"><%= event.genre %></p><% } %>
+    <% if (event.durationMinutes) { %><p>⏱ Duration: <%= event.durationMinutes %> minutes</p><% } %>
+    <% if (event.description) { %><p class="event-description"><%= event.description %></p><% } %>
+  </div>
+
+  <h2>Available Shows</h2>
+  <% if (shows.length === 0) { %>
+    <p>No shows scheduled yet.</p>
+  <% } else { %>
+    <div class="show-list">
+      <% shows.forEach(function(show) { %>
+        <% if (show.isScheduled) { %>
+          <div class="show-card">
+            <p class="show-time">🕐 <%= new Date(show.startTime).toLocaleString('en-LK') %></p>
+            <p class="show-price">From LKR <%= show.basePrice.toFixed(2) %></p>
+            <a href="/shows/<%= show.id %>/seats" class="btn btn-primary">Select Seats</a>
+          </div>
+        <% } %>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+<a href="/" class="btn btn-outline">&larr; Back to Events</a>
+<%- include('../layouts/footer') %>

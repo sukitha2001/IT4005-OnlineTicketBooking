@@ -1,0 +1,56 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1>User Management</h1>
+</div>
+
+<form class="search-form" action="/admin/users" method="GET">
+  <input type="text" name="search" placeholder="Search by name or email..." value="<%= filters.search || '' %>" aria-label="Search users">
+  <select name="role" aria-label="Filter by role">
+    <option value="">All Roles</option>
+    <option value="CUSTOMER"     <%= filters.role === 'CUSTOMER' ? 'selected' : '' %>>Customer</option>
+    <option value="ORGANIZER"    <%= filters.role === 'ORGANIZER' ? 'selected' : '' %>>Organizer</option>
+    <option value="SYSTEM_ADMIN" <%= filters.role === 'SYSTEM_ADMIN' ? 'selected' : '' %>>System Admin</option>
+  </select>
+  <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<div class="table-responsive">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (users.length === 0) { %>
+        <tr><td colspan="6" class="text-center">No users found.</td></tr>
+      <% } %>
+      <% users.forEach(function(u) { %>
+        <tr>
+          <td><%= u.name %></td>
+          <td><%= u.email %></td>
+          <td><%= u.role %></td>
+          <td><span class="badge badge--<%= u.status.toLowerCase() %>"><%= u.status %></span></td>
+          <td><%= new Date(u.createdAt).toLocaleDateString('en-LK') %></td>
+          <td>
+            <% if (u.id !== user.id) { %>
+              <form action="/admin/users/<%= u.id %>/status" method="POST" style="display:inline" class="confirm-form" data-message="Are you sure you want to <%= u.status === 'ACTIVE' ? 'disable' : 'enable' %> this user?">
+                <button type="submit" class="btn btn-sm <%= u.status === 'ACTIVE' ? 'btn-danger' : 'btn-success' %>">
+                  <%= u.status === 'ACTIVE' ? 'Disable' : 'Enable' %>
+                </button>
+              </form>
+            <% } else { %>
+              <em>You</em>
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<%- include('../layouts/footer') %>

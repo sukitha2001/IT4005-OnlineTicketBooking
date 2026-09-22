@@ -1,0 +1,188 @@
+/* 
+ * IT4005 TicketBook Base Styles 
+ * Ticketmaster-inspired minimal UI
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #026cdf; /* Ticketmaster Blue */
+  --primary-hover: #0150a7;
+  --secondary: #1f262d;
+  --success: #05a05b;
+  --danger: #d92d20;
+  --warning: #f7b100;
+  --bg-light: #f5f6f7;
+  --bg-white: #ffffff;
+  --text-main: #1f262d;
+  --text-muted: #5e6b77;
+  --border: #d2d6dc;
+  --border-radius: 8px;
+  --border-radius-pill: 50px;
+  --shadow: 0 2px 10px rgba(0,0,0,0.08);
+  --shadow-hover: 0 10px 20px rgba(0,0,0,0.12);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  --nav-bg: #031527;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); color: var(--text-main); background: var(--bg-light); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Layout */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; min-height: calc(100vh - 160px); }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; background: var(--nav-bg); color: white; }
+.brand { font-size: 1.5rem; font-weight: 800; text-decoration: none !important; color: white; letter-spacing: -0.5px; }
+.nav-toggle { display: none; background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+.nav-links a { color: white; font-weight: 500; font-size: 0.95rem; }
+.nav-links a:hover { color: #cbd5e1; }
+.nav-links .btn-link { color: white; text-decoration: none; font-weight: 500; font-size: 0.95rem; opacity: 0.9; }
+.nav-links .btn-link:hover { opacity: 1; text-decoration: underline; }
+.footer { text-align: center; padding: 2rem; background: var(--nav-bg); color: #94a3b8; margin-top: auto; font-size: 0.9rem; }
+
+/* Typography */
+h1, h2, h3 { color: var(--text-main); line-height: 1.2; font-weight: 700; }
+p { margin-bottom: 1rem; }
+.page-header h1 { margin-bottom: 1.5rem; font-size: 2rem; letter-spacing: -0.5px; }
+
+/* Alerts */
+.alert { padding: 1rem 1.25rem; border-radius: var(--border-radius); margin-bottom: 1.5rem; font-weight: 500; }
+.alert-success { background: #e6f6ee; color: #047241; border: 1px solid #b3e6cd; }
+.alert-error { background: #fceceb; color: #a31911; border: 1px solid #f5c2bf; }
+.alert-info { background: #e5f0fa; color: #01438a; border: 1px solid #b8d8f2; }
+
+/* Buttons */
+.btn { display: inline-block; padding: 0.6rem 1.25rem; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-align: center; text-decoration: none !important; transition: all 0.2s ease; font-size: 0.95rem; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+.btn-secondary { background: var(--secondary); color: white; }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-warning { background: var(--warning); color: #fff; }
+.btn-outline { background: transparent; border-color: var(--border); color: var(--text-main); }
+.btn-outline:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+.btn-link { background: none; border: none; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; color: var(--primary); box-shadow: none !important; transform: none !important; }
+.btn-full { width: 100%; display: block; }
+.btn-large { padding: 0.85rem 1.75rem; font-size: 1.1rem; border-radius: 8px; }
+
+/* Forms & Cards */
+.card { background: var(--bg-white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 2rem; border: 1px solid #eef0f2; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 1rem; transition: border-color 0.2s; background: #fff; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2, 108, 223, 0.15); }
+.hint { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; margin-left: 0.5rem; }
+
+/* Badges */
+.badge { display: inline-block; padding: 0.35rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge--active, .badge--published, .badge--confirmed { background: #e6f6ee; color: #047241; }
+.badge--disabled, .badge--cancelled, .badge--payment_failed { background: #fceceb; color: #a31911; }
+.badge--draft, .badge--unpublished, .badge--pending, .badge--expired { background: #f1f5f9; color: #475569; }
+
+/* Tables */
+.table-responsive { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--bg-white); box-shadow: var(--shadow); border-radius: 12px; overflow: hidden; border: 1px solid #eef0f2; }
+.data-table th, .data-table td { padding: 1.25rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+.data-table th { background: #f8fafc; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; }
+.data-table tbody tr:hover { background: #f8fafc; }
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+/* Auth Views */
+.auth-page { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 250px); }
+.auth-card { background: var(--bg-white); padding: 3rem; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 480px; border: none; }
+.auth-card h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+.auth-switch { text-align: center; margin-top: 2rem; font-weight: 500; }
+.demo-accounts { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.9rem; background: #f8fafc; border-radius: 8px; padding: 1.5rem; }
+.demo-accounts h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+.demo-accounts ul { padding-left: 1.5rem; color: var(--text-muted); }
+.demo-accounts li { margin-bottom: 0.25rem; }
+
+/* Events Grid & Hero */
+.hero { background: linear-gradient(135deg, #021425 0%, #026cdf 100%); color: white; padding: 4rem 2rem; border-radius: 16px; text-align: center; margin-bottom: 2.5rem; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.hero h1 { color: white; font-size: 2.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+.hero p { font-size: 1.2rem; opacity: 0.9; }
+
+.search-form { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; background: var(--bg-white); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow); align-items: flex-end; }
+.search-form .form-group { margin-bottom: 0; flex: 1; min-width: 200px; }
+.search-form input, .search-form select { border-color: #cbd5e1; }
+.search-form .btn { padding: 0.85rem 2rem; }
+
+.event-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+.event-card { background: var(--bg-white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid #eef0f2; cursor: pointer; }
+.event-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.event-image { height: 180px; background-size: cover; background-position: center; background-color: #e2e8f0; position: relative; }
+.event-image .event-badge { position: absolute; top: 1rem; left: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.event-badge { display: inline-block; padding: 0.35rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.event-badge--movie { background: #fff; color: #026cdf; }
+.event-badge--concert { background: #fff; color: #86198f; }
+.event-badge--sport { background: #fff; color: #166534; }
+.event-badge--theatre { background: #fff; color: #9a3412; }
+.event-content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.event-title { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: -0.5px; }
+.event-title a { color: var(--text-main); text-decoration: none; }
+.event-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.mt-4 { margin-top: auto !important; padding-top: 1rem; }
+
+/* Seat Map - Ticketmaster Style */
+.seat-map-page { display: flex; flex-direction: column; gap: 2rem; }
+.booking-info { text-align: center; margin-bottom: 1rem; }
+.show-info { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
+.seat-legend { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1rem; background: var(--bg-white); padding: 1rem; border-radius: 50px; box-shadow: var(--shadow); display: inline-flex; margin-left: auto; margin-right: auto; }
+.seat-sample { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+.seat-sample::before { content: ''; display: inline-block; width: 16px; height: 16px; border-radius: 50%; }
+.seat-sample.seat--available::before { background: var(--primary); }
+.seat-sample.seat--selected::before { background: var(--success); }
+.seat-sample.seat--booked::before { background: #cbd5e1; }
+
+.seat-map { display: flex; flex-direction: column; gap: 0.75rem; align-items: center; background: var(--bg-white); padding: 3rem 2rem; border-radius: 16px; box-shadow: inset 0 0 0 1px #eef0f2, 0 10px 25px rgba(0,0,0,0.05); overflow-x: auto; position: relative; }
+/* Fake stage */
+.seat-map::before { content: 'STAGE'; display: block; width: 60%; height: 40px; background: #e2e8f0; color: #94a3b8; font-weight: 800; letter-spacing: 4px; display: flex; align-items: center; justify-content: center; border-radius: 0 0 100px 100px; margin-bottom: 3rem; }
+
+.seat-row { display: flex; gap: 0.5rem; align-items: center; }
+.row-label { width: 2.5rem; font-weight: 700; text-align: right; color: var(--text-muted); padding-right: 0.5rem; }
+.seat { width: 36px; height: 36px; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; transition: transform 0.15s, box-shadow 0.15s; position: relative; color: transparent; }
+.seat:not(:disabled):hover { transform: scale(1.15); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+.seat:hover .seat-label { color: white; }
+.seat-label { position: absolute; z-index: 2; transition: color 0.15s; }
+
+.seat--available { background: var(--primary); color: transparent; }
+.seat--booked, .seat:disabled { background: #e2e8f0; cursor: not-allowed; opacity: 0.6; }
+.seat--booked:hover, .seat:disabled:hover { transform: none; box-shadow: none; }
+.seat.selected { background: var(--success); color: white; box-shadow: 0 0 0 3px rgba(5, 160, 91, 0.3); transform: scale(1.1); }
+.seat-type--vip { border: 2px solid #eab308; }
+
+.booking-summary { background: var(--bg-white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); }
+.booking-summary h2 { margin-bottom: 1.5rem; font-size: 1.5rem; }
+#selectedList { list-style: none; margin-bottom: 1.5rem; }
+#selectedList li { padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-weight: 500; }
+.total { font-size: 1.5rem; text-align: right; display: flex; justify-content: space-between; align-items: center; font-weight: 700; padding-top: 1rem; }
+.total strong { color: var(--primary); font-size: 1.75rem; }
+
+.payment-section { background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--border); margin-bottom: 2rem; }
+
+/* Tickets */
+.ticket-page { display: flex; flex-direction: column; align-items: center; gap: 2rem; padding: 2rem 0; }
+.ticket-card { background: white; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; width: 100%; max-width: 650px; border: 1px solid #e2e8f0; position: relative; }
+.ticket-header { background: var(--primary); color: white; padding: 2rem; text-align: center; position: relative; }
+/* Ticket cutout effects */
+.ticket-header::after, .ticket-header::before { content: ''; position: absolute; bottom: -12px; width: 24px; height: 24px; background: var(--bg-light); border-radius: 50%; z-index: 10; border-top: 1px solid #e2e8f0; }
+.ticket-header::before { left: -12px; border-right: 1px solid #e2e8f0; transform: rotate(45deg); }
+.ticket-header::after { right: -12px; border-left: 1px solid #e2e8f0; transform: rotate(-45deg); }
+
+.ticket-header h1 { color: white; margin-bottom: 0.5rem; letter-spacing: 2px; text-transform: uppercase; font-size: 1.5rem; }
+.ticket-ref { font-size: 1.1rem; opacity: 0.9; letter-spacing: 1px; }
+.ticket-body { display: flex; padding: 3rem 2rem; gap: 3rem; align-items: center; flex-wrap: wrap; border-top: 2px dashed #cbd5e1; margin-top: -2px; }
+.qr-code { text-align: center; background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.qr-hint { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; font-weight: 500; }
+.ticket-info { flex: 1; }
+.ticket-table { width: 100%; text-align: left; }
+.ticket-table th { color: var(--text-muted); padding: 0.75rem 0; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #f1f5f9; }
+.ticket-table td { padding: 0.75rem 0; font-weight: 700; text-align: right; border-bottom: 1px solid #f1f5f9; font-size: 1.1rem; }
+.qr-value { font-family: 'Courier New', Courier, monospace; font-size: 1rem; background: #f8fafc; padding: 0.25rem 0.5rem; border-radius: 4px; color: var(--primary); }
+
+.text-center { text-align: center; }

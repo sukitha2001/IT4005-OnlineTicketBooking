@@ -1,0 +1,40 @@
+<%- include('../layouts/header', { title: title, user: user }) %>
+
+<section class="hero">
+  <h1>Browse Movies &amp; Events</h1>
+  <p>Find and book tickets for your favourite shows.</p>
+</section>
+
+<form class="search-form" action="/events" method="GET">
+  <input type="text" name="search" placeholder="Search events..." value="<%= filters.search || '' %>" aria-label="Search events">
+  <select name="type" aria-label="Event type">
+    <option value="">All Types</option>
+    <option value="MOVIE"    <%= filters.type === 'MOVIE'    ? 'selected' : '' %>>Movie</option>
+    <option value="CONCERT"  <%= filters.type === 'CONCERT'  ? 'selected' : '' %>>Concert</option>
+    <option value="SPORT"    <%= filters.type === 'SPORT'    ? 'selected' : '' %>>Sport</option>
+    <option value="THEATRE"  <%= filters.type === 'THEATRE'  ? 'selected' : '' %>>Theatre</option>
+    <option value="OTHER"    <%= filters.type === 'OTHER'    ? 'selected' : '' %>>Other</option>
+  </select>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<div class="event-grid">
+  <% if (events.length === 0) { %>
+    <p class="no-results">No events found. <a href="/">Clear filters</a></p>
+  <% } %>
+  <% events.forEach(function(event) { %>
+    <article class="event-card">
+      <div class="event-image" style="background-image: url('<%= event.imageUrl || 'https://images.unsplash.com/photo-1540039155732-d674d6e30092?auto=format&fit=crop&w=600&q=80' %>');">
+        <div class="event-badge event-badge--<%= event.type.toLowerCase() %>"><%= event.type %></div>
+      </div>
+      <div class="event-content">
+        <h2 class="event-title"><a href="/events/<%= event.id %>"><%= event.title %></a></h2>
+        <% if (event.genre) { %><p class="event-meta">🎭 <%= event.genre %></p><% } %>
+        <% if (event.durationMinutes) { %><p class="event-meta">⏱ <%= event.durationMinutes %> min</p><% } %>
+        <a href="/events/<%= event.id %>" class="btn btn-primary btn-full mt-4">See Tickets</a>
+      </div>
+    </article>
+  <% }); %>
+</div>
+
+<%- include('../layouts/footer') %>

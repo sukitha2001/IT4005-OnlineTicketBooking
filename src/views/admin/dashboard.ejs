@@ -1,0 +1,31 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1>System Administrator Dashboard</h1>
+</div>
+
+<div class="dashboard-grid">
+  <div class="card">
+    <h2>User Management</h2>
+    <p>Manage customers, organizers, and administrators. Suspend or activate accounts.</p>
+    <a href="/admin/users" class="btn btn-primary">Manage Users</a>
+  </div>
+
+  <div class="card">
+    <h2>System Audit Logs</h2>
+    <p>View all critical actions performed in the system.</p>
+    <a href="/admin/logs" class="btn btn-outline">View Logs</a>
+  </div>
+</div>
+
+<div class="card announcement-card">
+  <h2>Global Platform Announcement</h2>
+  <p>Send an announcement to all users across the platform.</p>
+  <form action="/admin/announcements" method="POST" class="confirm-form" data-message="Are you sure you want to broadcast this to everyone?">
+    <div class="form-group">
+      <label for="message">Announcement Message</label>
+      <textarea id="message" name="message" rows="3" required maxlength="255"></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary">Broadcast Announcement</button>
+  </form>
+</div>
+<%- include('../layouts/footer') %>

@@ -1,0 +1,46 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1>My Events (Organizer Dashboard)</h1>
+  <a href="/organizer/events/new" class="btn btn-primary">+ Create New Event</a>
+</div>
+
+<% if (events.length === 0) { %>
+  <div class="empty-state">
+    <p>You have not created any events yet.</p>
+  </div>
+<% } else { %>
+  <div class="event-list-admin">
+    <% events.forEach(function(event) { %>
+      <div class="card event-card-admin">
+        <div class="event-info">
+          <h2><%= event.title %> <span class="badge badge--<%= event.status.toLowerCase() %>"><%= event.status %></span></h2>
+          <p>Type: <%= event.type %> | Genre: <%= event.genre || 'N/A' %></p>
+        </div>
+        <div class="event-actions">
+          <a href="/organizer/events/<%= event.id %>/edit" class="btn btn-outline">Edit</a>
+          <a href="/organizer/events/<%= event.id %>/shows/new" class="btn btn-outline">+ Add Show</a>
+          
+          <% if (event.status === 'DRAFT' || event.status === 'UNPUBLISHED') { %>
+            <form action="/organizer/events/<%= event.id %>/publish" method="POST" style="display:inline" class="confirm-form" data-message="Are you sure you want to publish this event?">
+              <button type="submit" class="btn btn-success">Publish</button>
+            </form>
+          <% } else if (event.status === 'PUBLISHED') { %>
+            <form action="/organizer/events/<%= event.id %>/unpublish" method="POST" style="display:inline" class="confirm-form" data-message="Are you sure you want to unpublish this event?">
+              <button type="submit" class="btn btn-warning">Unpublish</button>
+            </form>
+          <% } %>
+        </div>
+        <hr>
+        <div class="announcement-section">
+          <h3>Send Announcement</h3>
+          <form action="/organizer/events/<%= event.id %>/announcements" method="POST" class="inline-form confirm-form" data-message="Send this announcement to all event customers?">
+            <input type="text" name="message" placeholder="Announcement message..." required maxlength="255" aria-label="Announcement message">
+            <button type="submit" class="btn btn-secondary">Send</button>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('../layouts/footer') %>

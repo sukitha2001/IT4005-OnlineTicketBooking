@@ -1,0 +1,10 @@
+<%- include('../layouts/header', { title: title || 'Server Error', user }) %>
+<div class="error-page">
+  <h1>💥 500 Server Error</h1>
+  <p>Something went wrong on our end.</p>
+  <% if (locals.correlationId) { %>
+    <p class="correlation">Error Reference: <code><%= correlationId %></code></p>
+  <% } %>
+  <a href="/" class="btn btn-primary">Return to Home</a>
+</div>
+<%- include('../layouts/footer') %>

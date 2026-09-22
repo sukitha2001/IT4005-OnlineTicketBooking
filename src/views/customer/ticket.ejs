@@ -1,0 +1,29 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="ticket-page">
+  <div class="ticket-card">
+    <div class="ticket-header">
+      <h1>🎟️ E-Ticket</h1>
+      <p class="ticket-ref">Ref: <strong><%= booking.reference %></strong></p>
+    </div>
+    <div class="ticket-body">
+      <div class="qr-code">
+        <img src="<%= qrDataUrl %>" alt="QR Code for ticket <%= booking.reference %>" width="200" height="200">
+        <p class="qr-hint">Present this QR code at the venue</p>
+      </div>
+      <div class="ticket-info">
+        <table class="ticket-table" aria-label="Ticket information">
+          <tr><th scope="row">Reference</th><td><%= booking.reference %></td></tr>
+          <tr><th scope="row">Status</th><td><span class="badge badge--confirmed"><%= booking.status %></span></td></tr>
+          <tr><th scope="row">Total Paid</th><td>LKR <%= parseFloat(booking.totalAmount).toFixed(2) %></td></tr>
+          <tr><th scope="row">Issued At</th><td><%= new Date(ticket.issuedAt).toLocaleString('en-LK') %></td></tr>
+          <tr><th scope="row">QR Value</th><td class="qr-value"><code><%= ticket.qrValue %></code></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="ticket-actions">
+    <a href="/customer/bookings/<%= booking.id %>" class="btn btn-outline">&larr; Back to Booking</a>
+    <button onclick="window.print()" class="btn btn-primary">🖨️ Print Ticket</button>
+  </div>
+</div>
+<%- include('../layouts/footer') %>

@@ -1,0 +1,29 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1>My Bookings</h1>
+</div>
+<% if (bookings.length === 0) { %>
+  <div class="empty-state">
+    <p>You have no bookings yet.</p>
+    <a href="/" class="btn btn-primary">Browse Events</a>
+  </div>
+<% } else { %>
+  <div class="booking-list">
+    <% bookings.forEach(function(b) { %>
+      <article class="booking-card booking-card--<%= b.status.toLowerCase() %>">
+        <div class="booking-info">
+          <h2><%= b.eventTitle %></h2>
+          <p>🕐 <%= b.startTime ? new Date(b.startTime).toLocaleString('en-LK') : 'N/A' %></p>
+          <p>📍 <%= b.venueName || '' %></p>
+          <p>Reference: <strong><%= b.reference %></strong></p>
+          <p>Total: <strong>LKR <%= parseFloat(b.totalAmount).toFixed(2) %></strong></p>
+          <span class="badge badge--<%= b.status.toLowerCase() %>"><%= b.status %></span>
+        </div>
+        <div class="booking-actions">
+          <a href="/customer/bookings/<%= b.id %>" class="btn btn-outline">View Details</a>
+        </div>
+      </article>
+    <% }); %>
+  </div>
+<% } %>
+<%- include('../layouts/footer') %>

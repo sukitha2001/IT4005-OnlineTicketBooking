@@ -1,0 +1,73 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="seat-map-page">
+  <div class="booking-info">
+    <h1>Select Your Seats</h1>
+    <p class="show-info">🕐 <%= new Date(show.startTime).toLocaleString('en-LK') %> &nbsp;|&nbsp; 📍 <%= venue.name %></p>
+  </div>
+
+  <div class="seat-legend" aria-label="Seat legend">
+    <span class="seat-sample seat--available" aria-label="Available seat">■ Available</span>
+    <span class="seat-sample seat--selected" aria-label="Selected seat">■ Selected</span>
+    <span class="seat-sample seat--booked"   aria-label="Booked seat">■ Booked</span>
+  </div>
+
+  <% if (!user) { %>
+    <div class="alert alert-info" role="note">
+      <a href="/login">Log in</a> or <a href="/register">Register</a> to complete your booking.
+    </div>
+  <% } %>
+
+  <div class="seat-map" id="seatMap" aria-label="Interactive seat map">
+    <% let currentRow = ''; %>
+    <% seats.forEach(function(seat) { %>
+      <% if (seat.rowLabel !== currentRow) { %>
+        <% if (currentRow !== '') { %></div><% } %>
+        <div class="seat-row">
+          <span class="row-label" aria-label="Row <%= seat.rowLabel %>"><%= seat.rowLabel %></span>
+        <% currentRow = seat.rowLabel; %>
+      <% } %>
+      <button
+        class="seat seat--<%= seat.status.toLowerCase() %> seat-type--<%= (seat.seatType || 'STANDARD').toLowerCase() %>"
+        data-id="<%= seat.id %>"
+        data-price="<%= seat.price %>"
+        data-label="<%= seat.label %>"
+        data-type="<%= seat.seatType %>"
+        <%= seat.status !== 'AVAILABLE' ? 'disabled aria-disabled="true"' : '' %>
+        aria-label="Seat <%= seat.label %> (<%= seat.seatType %>) LKR <%= seat.price %> - <%= seat.status %>"
+      >
+        <span class="seat-label"><%= seat.label %></span>
+        <% if (seat.seatType === 'VIP') { %><span class="seat-icon" aria-hidden="true">★</span><% } %>
+      </button>
+    <% }); %>
+    </div>
+  </div>
+
+  <div class="booking-summary" id="bookingSummary" aria-live="polite">
+    <h2>Selected Seats</h2>
+    <ul id="selectedList"><li>No seats selected</li></ul>
+    <p class="total">Total: <strong id="totalAmount">LKR 0.00</strong></p>
+  </div>
+
+  <% if (user && user.role === 'CUSTOMER') { %>
+    <form action="/customer/bookings" method="POST" id="bookingForm">
+      <input type="hidden" name="showId" value="<%= show.id %>">
+      <div id="seatInputs"></div>
+
+      <div class="payment-section">
+        <label for="simulatedResult">Simulate Payment Result:</label>
+        <select name="simulatedResult" id="simulatedResult">
+          <option value="success">✅ Success</option>
+          <option value="failure">❌ Failure (test)</option>
+        </select>
+      </div>
+
+      <button type="submit" id="confirmBtn" class="btn btn-primary btn-large" disabled>
+        Confirm &amp; Pay
+      </button>
+    </form>
+  <% } %>
+</div>
+
+<a href="javascript:history.back()" class="btn btn-outline">&larr; Back</a>
+<script src="/js/seatMap.js"></script>
+<%- include('../layouts/footer') %>

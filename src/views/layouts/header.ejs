@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> — TicketBook</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<nav class="navbar" aria-label="Main navigation">
+  <a href="/" class="brand">🎟️ TicketBook</a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">☰</button>
+  <ul class="nav-links" id="nav-menu">
+    <li><a href="/events">Browse Events</a></li>
+    <% if (locals.user && user) { %>
+      <% if (user.role === 'CUSTOMER') { %>
+        <li><a href="/customer/bookings">My Bookings</a></li>
+        <li><a href="/customer/profile">Profile</a></li>
+      <% } %>
+      <% if (user.role === 'ORGANIZER') { %>
+        <li><a href="/organizer/events">My Events</a></li>
+      <% } %>
+      <% if (user.role === 'SYSTEM_ADMIN') { %>
+        <li><a href="/admin/dashboard">Admin</a></li>
+        <li><a href="/admin/users">Users</a></li>
+        <li><a href="/admin/logs">Logs</a></li>
+      <% } %>
+      <li>
+        <form action="/logout" method="POST" style="display:inline">
+          <button type="submit" class="btn-link">Logout (<%= user.name %>)</button>
+        </form>
+      </li>
+    <% } else { %>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Register</a></li>
+    <% } %>
+  </ul>
+</nav>
+<main class="container" id="main-content">
+  <% if (locals.success && success && success.length) { %>
+    <div class="alert alert-success" role="alert" aria-live="polite"><%= success[0] %></div>
+  <% } %>
+  <% if (locals.error && error && error.length) { %>
+    <div class="alert alert-error" role="alert" aria-live="polite"><%= error[0] %></div>
+  <% } %>

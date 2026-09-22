@@ -1,0 +1,50 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="page-header">
+  <h1><%= title %></h1>
+</div>
+
+<div class="card">
+  <form action="<%= event ? '/organizer/events/' + event.id : '/organizer/events' %>" method="POST" novalidate>
+    <div class="form-group">
+      <label for="title">Event Title</label>
+      <input type="text" id="title" name="title" value="<%= event ? event.title : '' %>" required maxlength="120">
+    </div>
+    
+    <div class="form-group">
+      <label for="type">Event Type</label>
+      <select id="type" name="type" required>
+        <option value="MOVIE" <%= event && event.type === 'MOVIE' ? 'selected' : '' %>>Movie</option>
+        <option value="CONCERT" <%= event && event.type === 'CONCERT' ? 'selected' : '' %>>Concert</option>
+        <option value="SPORT" <%= event && event.type === 'SPORT' ? 'selected' : '' %>>Sport</option>
+        <option value="THEATRE" <%= event && event.type === 'THEATRE' ? 'selected' : '' %>>Theatre</option>
+        <option value="OTHER" <%= event && event.type === 'OTHER' ? 'selected' : '' %>>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="genre">Genre / Category <span class="hint">(Optional)</span></label>
+      <input type="text" id="genre" name="genre" value="<%= event ? event.genre : '' %>" maxlength="50">
+    </div>
+
+    <div class="form-group">
+      <label for="durationMinutes">Duration (Minutes)</label>
+      <input type="number" id="durationMinutes" name="durationMinutes" value="<%= event ? event.durationMinutes : '' %>" min="1">
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL <span class="hint">(Optional)</span></label>
+      <input type="url" id="imageUrl" name="imageUrl" value="<%= event ? event.imageUrl : '' %>" maxlength="255">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="5"><%= event ? event.description : '' %></textarea>
+    </div>
+
+    <div class="form-actions">
+      <a href="/organizer/events" class="btn btn-outline">Cancel</a>
+      <button type="submit" class="btn btn-primary"><%= event ? 'Save Changes' : 'Create Event' %></button>
+    </div>
+  </form>
+</div>
+<%- include('../layouts/footer') %>

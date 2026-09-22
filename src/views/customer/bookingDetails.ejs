@@ -1,0 +1,34 @@
+<%- include('../layouts/header', { title, user }) %>
+<div class="booking-detail">
+  <h1>Booking Details</h1>
+  <div class="card">
+    <p><strong>Reference:</strong> <%= booking.reference %></p>
+    <p><strong>Status:</strong> <span class="badge badge--<%= booking.status.toLowerCase() %>"><%= booking.status %></span></p>
+    <p><strong>Total Paid:</strong> LKR <%= parseFloat(booking.totalAmount).toFixed(2) %></p>
+    <p><strong>Booked At:</strong> <%= new Date(booking.bookedAt).toLocaleString('en-LK') %></p>
+  </div>
+
+  <h2>Seats</h2>
+  <table class="data-table" aria-label="Booked seats">
+    <thead>
+      <tr><th scope="col">Seat</th><th scope="col">Type</th><th scope="col">Price</th></tr>
+    </thead>
+    <tbody>
+      <% seats.forEach(function(s) { %>
+        <tr>
+          <td><%= s.rowLabel || '' %><%= s.seatNumber || '' %></td>
+          <td><%= s.seatType || 'STANDARD' %></td>
+          <td>LKR <%= parseFloat(s.unitPrice).toFixed(2) %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <% if (ticket) { %>
+    <div class="ticket-link">
+      <a href="/customer/tickets/<%= ticket.id %>" class="btn btn-primary">🎟️ View E-Ticket</a>
+    </div>
+  <% } %>
+</div>
+<a href="/customer/bookings" class="btn btn-outline">&larr; My Bookings</a>
+<%- include('../layouts/footer') %>
