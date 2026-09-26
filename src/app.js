@@ -13,6 +13,7 @@ const customerRoutes = require('./routes/customerRoutes');
 const organizerRoutes = require('./routes/organizerRoutes');
 const adminRoutes    = require('./routes/adminRoutes');
 const errorHandler   = require('./middleware/errorHandler');
+const loadUser       = require('./middleware/loadUser');
 
 const app = express();
 
@@ -33,7 +34,10 @@ app.use(session(sessionCfg));
 // ── Flash messages ────────────────────────────────────────────
 app.use(flash());
 
-// ── Make flash available in all views ────────────────────────
+// ── Load user from session (non-redirecting) ──────────────────
+app.use(loadUser);
+
+// ── Make flash + user available in all views ─────────────────
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error   = req.flash('error');

@@ -37,7 +37,9 @@ class BookingRepository extends BaseRepository {
       'INSERT INTO booking (user_id, show_id, reference, total_amount, status) VALUES (?,?,?,?,?)',
       [userId, showId, reference, totalAmount, 'PENDING']
     );
-    return this.findById(result.insertId);
+    // Must re-read via the same connection (conn) so uncommitted rows are visible.
+    const [rows] = await execute('SELECT * FROM booking WHERE booking_id = ?', [result.insertId]);
+    return this._hydrate(rows[0]);
   }
   async updateStatus(id, status, conn) {
     const execute = conn ? (s,p) => conn.execute(s,p) : (s,p) => this.pool.execute(s,p);

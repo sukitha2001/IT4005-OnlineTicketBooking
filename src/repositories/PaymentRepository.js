@@ -9,7 +9,8 @@ class PaymentRepository extends BaseRepository {
       'INSERT INTO payment (booking_id, method, amount, status, transaction_reference, paid_at) VALUES (?,?,?,?,?,?)',
       [bookingId, method, amount, status, transactionReference, paidAt]
     );
-    const rows = await this.query('SELECT * FROM payment WHERE payment_id = ?', [result.insertId]);
+    // Must re-read via the same connection (conn) so uncommitted rows are visible.
+    const [rows] = await execute('SELECT * FROM payment WHERE payment_id = ?', [result.insertId]);
     return rows[0] ? new Payment(rows[0]) : null;
   }
   async findByBooking(bookingId) {

@@ -9,7 +9,8 @@ class TicketRepository extends BaseRepository {
       'INSERT INTO ticket (booking_id, qr_value) VALUES (?,?)',
       [bookingId, qrValue]
     );
-    const rows = await this.query('SELECT * FROM ticket WHERE ticket_id = ?', [result.insertId]);
+    // Must re-read via the same connection (conn) so uncommitted rows are visible.
+    const [rows] = await execute('SELECT * FROM ticket WHERE ticket_id = ?', [result.insertId]);
     return rows[0] ? new Ticket(rows[0]) : null;
   }
   async findByBooking(bookingId) {
